@@ -14,7 +14,7 @@ class Endereco(models.Model):
 
 
 class Estabelecimento(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     cnpj = models.CharField(max_length=16)
     endereco = models.ForeignKey(Endereco, on_delete=models.PROTECT)
 
@@ -23,7 +23,7 @@ class Estabelecimento(models.Model):
 
 
 class Cliente(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     cpf = models.CharField(max_length=11)
     endereco = models.ForeignKey(Endereco, on_delete=models.PROTECT)
 
@@ -31,7 +31,7 @@ class Cliente(models.Model):
 
 
 class Entregador(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     cpf = models.CharField(max_length=11)
     veiculo = models.OneToOneField(Veiculo, on_delete=models.PROTECT)
 
