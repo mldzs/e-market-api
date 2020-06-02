@@ -33,6 +33,6 @@ class Cliente(models.Model):
 class Entregador(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     cpf = models.CharField(max_length=11)
-    veiculo = models.OneToOneField(Veiculo, on_delete=models.PROTECT)
+    veiculo = models.OneToOneField(Veiculo, on_delete=models.PROTECT, blank=True, null=True)
 
     default_related_name = 'entregadores'

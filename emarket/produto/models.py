@@ -1,5 +1,6 @@
 from django.db import models
 
+from ..carrinho.models import Carrinho
 from ..categoria.models import Categoria
 from ..marca.models import Marca
 from ..usuario.models import Estabelecimento
@@ -22,3 +23,4 @@ class Produto(models.Model):
 class ProdutoCarrinho(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.PROTECT, related_name="produtos_carrinho")
     quantidade = models.PositiveIntegerField()
+    carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE, related_name="produtos_carrinho")

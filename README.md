@@ -5,13 +5,13 @@ ___
 ### Set environment variable
 Create a file called `.env` at the root of the project and assign the following variables:
 ```shell script
-POSTGRES_DB = emarket
-POSTGRES_USER = emarketuser
-POSTGRES_PASSWORD = emarketpassword
-POSTGRES_HOST = db
+POSTGRES_DB=emarket
+POSTGRES_USER=emarketuser
+POSTGRES_PASSWORD=emarketpassword
+POSTGRES_HOST=db
 
-DEBUG = true
-SECRET_KEY = 3oq%3nhm_o)7z#r#*f66h_r-yijb5)#c1c8t9)7%lfiw3zbms7` 
+DEBUG=true
+SECRET_KEY=3oq%3nhm_o)7z#r#*f66h_r-yijb5)#c1c8t9)7%lfiw3zbms7` 
 ```
 
 All values set above are standard values for development. If it goes up to production, it needs to be changed

@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Veiculo(models.Model):
-    placa = models.CharField(max_length=50)
+    placa = models.CharField(max_length=50, unique=True)
     ano = models.IntegerField()
     modelo = models.CharField(max_length=50)
     marca = models.CharField(max_length=50)
