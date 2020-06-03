@@ -1,3 +1,4 @@
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 
 from .models import TipoProduto, Produto, ProdutoCarrinho
@@ -33,6 +34,12 @@ class ProdutoViewSet(MixedPermissionModelViewSet):
         "partial_update": [IsAuthenticated, ProprioProdutoSupermercadoPermissao],
         "destroy": [IsAuthenticated, ProprioProdutoSupermercadoPermissao],
     }
+
+    def create(self, request, *args, **kwargs):
+        estabelecimento = request.user.estabelecimento
+        request.data['estabelecimento'] = estabelecimento.pk
+
+        return super().create(request, *args, **kwargs)
 
 
 class ProdutoCarrinhoViewSet(MixedPermissionModelViewSet):

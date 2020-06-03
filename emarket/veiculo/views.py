@@ -1,4 +1,5 @@
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from .serializers import VeiculoSerializer
 from .models import Veiculo
@@ -13,8 +14,16 @@ class VeiculoViewSet(MixedPermissionModelViewSet):
 
     permission_classes_by_action = {
         "list": [IsAuthenticated],
-        "retrieve": [IsAuthenticated],
+        "retrieve": [IsAuthenticated, DonoDoVeiculoPermissao],
         "create": [IsAuthenticated, EntregadorPermissao],
         "partial_update": [IsAuthenticated, DonoDoVeiculoPermissao],
         "destroy": [IsAuthenticated, DonoDoVeiculoPermissao],
     }
+
+    def list(self, request, *args, **kwargs):
+        try:
+            self.queryset = Veiculo.objects.filter(entregador=request.user.entregador)
+        except:
+            return Response({"message": "Você não tem permissão de Cliente."}, 400)
+
+        return super().list(request, *args, **kwargs)
