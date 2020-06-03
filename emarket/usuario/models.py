@@ -19,7 +19,7 @@ class Estabelecimento(models.Model):
     endereco = models.ForeignKey(Endereco, on_delete=models.PROTECT)
 
     class Meta:
-        default_related_name = 'estabelecimentos'
+        default_related_name = 'estabelecimento'
 
 
 class Cliente(models.Model):
@@ -27,7 +27,7 @@ class Cliente(models.Model):
     cpf = models.CharField(max_length=11)
     endereco = models.ForeignKey(Endereco, on_delete=models.PROTECT)
 
-    default_related_name = 'clientes'
+    default_related_name = 'cliente'
 
 
 class Entregador(models.Model):
@@ -35,4 +35,4 @@ class Entregador(models.Model):
     cpf = models.CharField(max_length=11)
     veiculo = models.OneToOneField(Veiculo, on_delete=models.PROTECT, blank=True, null=True)
 
-    default_related_name = 'entregadores'
+    default_related_name = 'entregador'

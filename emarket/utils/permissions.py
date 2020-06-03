@@ -68,3 +68,11 @@ class ProprioCarrinhoClientePermissao(BasePermission):
             return obj.cliente == request.user.cliente
         except:
             return False
+
+
+class ProprioPedidoClientePermissao(BasePermission):
+    def has_object_permission(self, request, view, obj) -> bool:
+        try:
+            return obj.carrinho.cliente == request.user.cliente
+        except:
+            return False

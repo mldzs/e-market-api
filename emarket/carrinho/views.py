@@ -10,13 +10,12 @@ from ..utils.views import MixedPermissionModelViewSet
 class CarrinhoViewSet(MixedPermissionModelViewSet):
     queryset = Carrinho.objects.all()
     serializer_class = CarrinhoSerializer
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get', 'post', 'delete']
 
     permission_classes_by_action = {
         "list": [IsAuthenticated],
         "retrieve": [IsAuthenticated, ProprioCarrinhoClientePermissao],
         "create": [IsAuthenticated, ClientePermissao],
-        "partial_update": [IsAuthenticated, ProprioCarrinhoClientePermissao],
         "destroy": [IsAuthenticated, ProprioCarrinhoClientePermissao],
     }
 
@@ -26,4 +25,10 @@ class CarrinhoViewSet(MixedPermissionModelViewSet):
         except:
             return Response({"message": "Você não tem permissão de Cliente."}, 400)
 
-        return super().list(*args, **kwargs)
+        return super().list(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        cliente = request.user.cliente
+        request.data['cliente'] = cliente.pk
+
+        return super().create(request, *args, **kwargs)
