@@ -22,7 +22,7 @@ class CarrinhoViewSet(MixedPermissionModelViewSet):
     def get_queryset(self):
         try:
             return Carrinho.objects.filter(cliente=self.request.user.cliente)
-        except:
+        except Exception:
             raise ValidationError({"message": "Você não tem permissão de Cliente."})
 
     def create(self, request, *args, **kwargs):

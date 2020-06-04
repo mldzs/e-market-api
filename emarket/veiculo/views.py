@@ -23,7 +23,7 @@ class VeiculoViewSet(MixedPermissionModelViewSet):
     def list(self, request, *args, **kwargs):
         try:
             self.queryset = Veiculo.objects.filter(entregador=request.user.entregador)
-        except:
+        except Exception:
             return Response({"message": "Você não tem permissão de Cliente."}, 400)
 
         return super().list(request, *args, **kwargs)
