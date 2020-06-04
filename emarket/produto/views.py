@@ -1,4 +1,3 @@
-from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -63,7 +62,7 @@ class ProdutoCarrinhoViewSet(MixedPermissionModelViewSet):
     def list(self, request, *args, **kwargs):
         try:
             self.queryset = ProdutoCarrinho.objects.filter(carrinho__cliente=request.user.cliente)
-        except:
+        except Exception:
             return Response({"message": "Você não tem permissão de Cliente."}, 400)
 
         return super().list(request, *args, **kwargs)

@@ -31,7 +31,7 @@ class PedidoViewSet(MixedPermissionModelViewSet):
     def get_queryset(self):
         try:
             return Pedido.objects.filter(carrinho__cliente=self.request.user.cliente)
-        except:
+        except Exception:
             raise ValidationError({"message": "Você não é um cliente!"})
 
     @action(methods=["PATCH"], detail=True, permission_classes=[IsAuthenticated, PedidoEstabelecimento])
@@ -42,7 +42,7 @@ class PedidoViewSet(MixedPermissionModelViewSet):
 
         # mensagem para cliente
 
-        return Response({"message": f"O pedido foi aceito. Avise-nos quando estiver pronto!"})
+        return Response({"message": "O pedido foi aceito. Avise-nos quando estiver pronto!"})
 
     @action(methods=["PATCH"], detail=True, permission_classes=[IsAuthenticated, PedidoEstabelecimento])
     def rejeitar_pedido(self, request, pk=None):

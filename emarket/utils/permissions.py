@@ -42,7 +42,7 @@ class DonoDoVeiculoPermissao(BasePermission):
     def has_object_permission(self, request, view, obj) -> bool:
         try:
             return request.user.entregador.veiculo == obj
-        except:
+        except Exception:
             return False
 
 
@@ -50,7 +50,7 @@ class ProprioProdutoSupermercadoPermissao(BasePermission):
     def has_object_permission(self, request, view, obj) -> bool:
         try:
             return obj.estabelecimento == request.user.estabelecimento
-        except:
+        except Exception:
             return False
 
 
@@ -58,7 +58,7 @@ class ProprioClienteProdutoCarrinhoPermissao(BasePermission):
     def has_object_permission(self, request, view, obj) -> bool:
         try:
             return obj.carrinho.cliente == request.user.cliente
-        except:
+        except Exception:
             return False
 
 
@@ -66,7 +66,7 @@ class ProprioCarrinhoClientePermissao(BasePermission):
     def has_object_permission(self, request, view, obj) -> bool:
         try:
             return obj.cliente == request.user.cliente
-        except:
+        except Exception:
             return False
 
 
@@ -74,7 +74,7 @@ class ProprioPedidoClientePermissao(BasePermission):
     def has_object_permission(self, request, view, obj) -> bool:
         try:
             return obj.carrinho.cliente == request.user.cliente
-        except:
+        except Exception:
             return False
 
 
@@ -82,5 +82,5 @@ class PedidoEstabelecimento(BasePermission):
     def has_object_permission(self, request, view, obj) -> bool:
         try:
             return obj.carrinho.estabelecimento == request.user.estabelecimento
-        except:
+        except Exception:
             return False
