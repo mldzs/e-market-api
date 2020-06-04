@@ -9,18 +9,43 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('usuario', '0001_initial'),
-        ('carrinho', '0001_initial'),
+        ("usuario", "0001_initial"),
+        ("carrinho", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Pedido',
+            name="Pedido",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('status', models.CharField(choices=[('pendente', 'Pendente'), ('elaborando_pedido', 'Elaborando Pedido'), ('entregando', 'Entregando'), ('entregue', 'Entregue')], max_length=100)),
-                ('carrinho', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, related_name='pedidos', to='carrinho.Carrinho')),
-                ('entregador', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='pedidos', to='usuario.Entregador')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("pendente", "Pendente"),
+                            ("elaborando_pedido", "Elaborando Pedido"),
+                            ("entregando", "Entregando"),
+                            ("entregue", "Entregue"),
+                        ],
+                        max_length=100,
+                    ),
+                ),
+                (
+                    "carrinho",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.PROTECT, related_name="pedidos", to="carrinho.Carrinho"
+                    ),
+                ),
+                (
+                    "entregador",
+                    models.OneToOneField(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="pedidos",
+                        to="usuario.Entregador",
+                    ),
+                ),
             ],
         ),
     ]

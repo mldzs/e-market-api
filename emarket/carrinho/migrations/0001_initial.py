@@ -9,16 +9,28 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('usuario', '0001_initial'),
+        ("usuario", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Carrinho',
+            name="Carrinho",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cliente', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='carrinhos', to='usuario.Cliente')),
-                ('estabelecimento', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='carrinhos', to='usuario.Estabelecimento')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "cliente",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="carrinhos", to="usuario.Cliente"
+                    ),
+                ),
+                (
+                    "estabelecimento",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="carrinhos",
+                        to="usuario.Estabelecimento",
+                    ),
+                ),
             ],
         ),
     ]

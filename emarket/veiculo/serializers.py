@@ -4,7 +4,6 @@ from ..veiculo.models import Veiculo
 
 
 class VeiculoSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Veiculo
-        fields = '__all__'
+        fields = "__all__"

@@ -9,44 +9,79 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('marca', '0001_initial'),
-        ('categoria', '0001_initial'),
-        ('usuario', '0001_initial'),
-        ('carrinho', '0001_initial'),
+        ("marca", "0001_initial"),
+        ("categoria", "0001_initial"),
+        ("usuario", "0001_initial"),
+        ("carrinho", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Produto',
+            name="Produto",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('preco', models.FloatField()),
-                ('estabelecimento', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='produtos', to='usuario.Estabelecimento')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("preco", models.FloatField()),
+                (
+                    "estabelecimento",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="produtos",
+                        to="usuario.Estabelecimento",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='TipoProduto',
+            name="TipoProduto",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nome', models.CharField(max_length=200)),
-                ('peso', models.FloatField()),
-                ('imagem', models.ImageField(upload_to='tipos_produto/')),
-                ('categoria', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tipos_produto', to='categoria.Categoria')),
-                ('marca', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tipos_produto', to='marca.Marca')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("nome", models.CharField(max_length=200)),
+                ("peso", models.FloatField()),
+                ("imagem", models.ImageField(upload_to="tipos_produto/")),
+                (
+                    "categoria",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tipos_produto",
+                        to="categoria.Categoria",
+                    ),
+                ),
+                (
+                    "marca",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="tipos_produto", to="marca.Marca"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ProdutoCarrinho',
+            name="ProdutoCarrinho",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantidade', models.PositiveIntegerField()),
-                ('carrinho', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='produtos_carrinho', to='carrinho.Carrinho')),
-                ('produto', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='produtos_carrinho', to='produto.Produto')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("quantidade", models.PositiveIntegerField()),
+                (
+                    "carrinho",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="produtos_carrinho",
+                        to="carrinho.Carrinho",
+                    ),
+                ),
+                (
+                    "produto",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="produtos_carrinho",
+                        to="produto.Produto",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='produto',
-            name='tipo_produto',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='produtos', to='produto.TipoProduto'),
+            model_name="produto",
+            name="tipo_produto",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name="produtos", to="produto.TipoProduto"
+            ),
         ),
     ]

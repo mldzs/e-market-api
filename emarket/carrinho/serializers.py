@@ -4,7 +4,6 @@ from .models import Carrinho
 
 
 class CarrinhoSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Carrinho
-        fields = '__all__'
+        fields = "__all__"

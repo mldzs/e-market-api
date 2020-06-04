@@ -10,7 +10,7 @@ from ..utils.views import MixedPermissionModelViewSet
 class VeiculoViewSet(MixedPermissionModelViewSet):
     queryset = Veiculo.objects.all()
     serializer_class = VeiculoSerializer
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ["get", "post", "patch", "delete"]
 
     permission_classes_by_action = {
         "list": [IsAuthenticated],

@@ -7,19 +7,16 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Marca',
+            name="Marca",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nome', models.CharField(max_length=55)),
-                ('imagem', models.ImageField(upload_to='marcas/')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("nome", models.CharField(max_length=55)),
+                ("imagem", models.ImageField(upload_to="marcas/")),
             ],
-            options={
-                'db_table': 'marca',
-            },
+            options={"db_table": "marca",},
         ),
     ]

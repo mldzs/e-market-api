@@ -9,7 +9,7 @@ from ..utils.views import MixedPermissionModelViewSet
 class MarcaViewSet(MixedPermissionModelViewSet):
     queryset = Marca.objects.all()
     serializer_class = MarcaSerializer
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ["get", "post", "patch", "delete"]
 
     permission_classes_by_action = {
         "list": [IsAuthenticated],

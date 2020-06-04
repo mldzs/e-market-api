@@ -5,4 +5,4 @@ class Categoria(models.Model):
     nome = models.CharField(max_length=55)
 
     class Meta:
-        db_table = 'categoria'
+        db_table = "categoria"

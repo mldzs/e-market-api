@@ -9,4 +9,4 @@ class Veiculo(models.Model):
     cor = models.CharField(max_length=50)
 
     class Meta:
-        db_table = 'veiculo'
+        db_table = "veiculo"

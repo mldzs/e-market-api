@@ -11,50 +11,73 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('veiculo', '0001_initial'),
+        ("veiculo", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Endereco',
+            name="Endereco",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('estado', models.CharField(max_length=10)),
-                ('cidade', models.CharField(max_length=60)),
-                ('bairro', models.CharField(max_length=60)),
-                ('rua', models.CharField(max_length=100)),
-                ('numero', models.CharField(max_length=10)),
-                ('complemento', models.CharField(max_length=255)),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("estado", models.CharField(max_length=10)),
+                ("cidade", models.CharField(max_length=60)),
+                ("bairro", models.CharField(max_length=60)),
+                ("rua", models.CharField(max_length=100)),
+                ("numero", models.CharField(max_length=10)),
+                ("complemento", models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
-            name='Estabelecimento',
+            name="Estabelecimento",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cnpj', models.CharField(max_length=16)),
-                ('endereco', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='estabelecimento', to='usuario.Endereco')),
-                ('usuario', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='estabelecimento', to=settings.AUTH_USER_MODEL)),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("cnpj", models.CharField(max_length=16)),
+                (
+                    "endereco",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="estabelecimento",
+                        to="usuario.Endereco",
+                    ),
+                ),
+                (
+                    "usuario",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="estabelecimento",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'default_related_name': 'estabelecimento',
-            },
+            options={"default_related_name": "estabelecimento",},
         ),
         migrations.CreateModel(
-            name='Entregador',
+            name="Entregador",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cpf', models.CharField(max_length=11)),
-                ('usuario', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('veiculo', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='veiculo.Veiculo')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("cpf", models.CharField(max_length=11)),
+                (
+                    "usuario",
+                    models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+                ),
+                (
+                    "veiculo",
+                    models.OneToOneField(
+                        blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to="veiculo.Veiculo"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Cliente',
+            name="Cliente",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cpf', models.CharField(max_length=11)),
-                ('endereco', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='usuario.Endereco')),
-                ('usuario', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("cpf", models.CharField(max_length=11)),
+                ("endereco", models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to="usuario.Endereco")),
+                (
+                    "usuario",
+                    models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+                ),
             ],
         ),
     ]

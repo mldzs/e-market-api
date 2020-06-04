@@ -18,36 +18,36 @@ from .veiculo.views import VeiculoViewSet
 
 
 router = DefaultRouter(trailing_slash=False)
-router.register(r'marcas', MarcaViewSet)
-router.register(r'veiculos', VeiculoViewSet)
-router.register(r'categorias', CategoriaViewSet)
-router.register(r'enderecos', EnderecoViewSet)
-router.register(r'estabelecimentos', EstabelecimentoViewSet)
-router.register(r'clientes', ClienteViewSet)
-router.register(r'entregadores', EntregadorViewSet)
-router.register(r'tipos-produto', TipoProdutoViewSet)
-router.register(r'produtos', ProdutoViewSet)
-router.register(r'produtos-carrinho', ProdutoCarrinhoViewSet)
-router.register(r'carrinho', CarrinhoViewSet)
-router.register(r'pedidos', PedidoViewSet)
+router.register(r"marcas", MarcaViewSet)
+router.register(r"veiculos", VeiculoViewSet)
+router.register(r"categorias", CategoriaViewSet)
+router.register(r"enderecos", EnderecoViewSet)
+router.register(r"estabelecimentos", EstabelecimentoViewSet)
+router.register(r"clientes", ClienteViewSet)
+router.register(r"entregadores", EntregadorViewSet)
+router.register(r"tipos-produto", TipoProdutoViewSet)
+router.register(r"produtos", ProdutoViewSet)
+router.register(r"produtos-carrinho", ProdutoCarrinhoViewSet)
+router.register(r"carrinho", CarrinhoViewSet)
+router.register(r"pedidos", PedidoViewSet)
 
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="E-Market API",
-      default_version='v1',
-      description="API to E-Market App",
-      contact=openapi.Contact(email="s.mieldazis@hotmail.com"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
+    openapi.Info(
+        title="E-Market API",
+        default_version="v1",
+        description="API to E-Market App",
+        contact=openapi.Contact(email="s.mieldazis@hotmail.com"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 
 urlpatterns = [
-    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path("docs/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    path("admin/", admin.site.urls),
+    path("api/", include(router.urls)),
     path("token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
 ]

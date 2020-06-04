@@ -1,5 +1,5 @@
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 
 from .serializers import CarrinhoSerializer
 from .models import Carrinho
@@ -10,7 +10,7 @@ from ..utils.views import MixedPermissionModelViewSet
 class CarrinhoViewSet(MixedPermissionModelViewSet):
     queryset = Carrinho.objects.all()
     serializer_class = CarrinhoSerializer
-    http_method_names = ['get', 'post', 'delete']
+    http_method_names = ["get", "post", "delete"]
 
     permission_classes_by_action = {
         "list": [IsAuthenticated],
@@ -19,16 +19,14 @@ class CarrinhoViewSet(MixedPermissionModelViewSet):
         "destroy": [IsAuthenticated, ProprioCarrinhoClientePermissao],
     }
 
-    def list(self, request, *args, **kwargs):
+    def get_queryset(self):
         try:
-            self.queryset = Carrinho.objects.filter(cliente=request.user.cliente)
+            return Carrinho.objects.filter(cliente=self.request.user.cliente)
         except:
-            return Response({"message": "Você não tem permissão de Cliente."}, 400)
-
-        return super().list(request, *args, **kwargs)
+            raise ValidationError({"message": "Você não tem permissão de Cliente."})
 
     def create(self, request, *args, **kwargs):
         cliente = request.user.cliente
-        request.data['cliente'] = cliente.pk
+        request.data["cliente"] = cliente.pk
 
         return super().create(request, *args, **kwargs)
