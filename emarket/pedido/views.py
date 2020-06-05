@@ -40,7 +40,10 @@ class PedidoViewSet(MixedPermissionModelViewSet):
         pedido.status = "elaborando_pedido"
         pedido.save()
 
-        # mensagem para cliente
+        # fcm_devices_cliente = request.user.fcmdevice_set.all()
+        # fcm_devices_cliente.send_message(title="Title", body="Message", data={"test": "test"})
+        # envio de email também
+        # passar pro celery
 
         return Response({"message": "O pedido foi aceito. Avise-nos quando estiver pronto!"})
 
