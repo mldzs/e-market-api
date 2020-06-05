@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from fcm_django.api.rest_framework import FCMDeviceViewSet
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt import views as jwt_views
 from rest_framework import permissions
@@ -30,6 +31,7 @@ router.register(r"produtos", ProdutoViewSet)
 router.register(r"produtos-carrinho", ProdutoCarrinhoViewSet)
 router.register(r"carrinho", CarrinhoViewSet)
 router.register(r"pedidos", PedidoViewSet)
+router.register(r"devices", FCMDeviceViewSet)
 
 
 schema_view = get_schema_view(

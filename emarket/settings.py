@@ -48,6 +48,7 @@ INSTALLED_APPS += [
     "rest_framework",
     "corsheaders",
     "drf_yasg",
+    "fcm_django",
 ]
 
 # custom apps
@@ -178,3 +179,5 @@ EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="emaildefault@mail.com")
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+
+FCM_DJANGO_SETTINGS = {"FCM_SERVER_KEY": config("FCM_SERVER_KEY")}
