@@ -193,7 +193,7 @@ class PedidoViewSet(MixedPermissionModelViewSet):
         pedido.save()
 
         mensagem = "O cliente confirmou o recebimento da entrega."
-        estabelecimento = pedido.carrinho.estabelecimento
+        estabelecimento = pedido.carrinho.estabelecimento.usuario
         enviar_email.delay(
             to=[estabelecimento.email],
             subject="Entrega confirmada",
