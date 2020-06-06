@@ -10,7 +10,7 @@ class Endereco(models.Model):
     bairro = models.CharField(max_length=60)
     rua = models.CharField(max_length=100)
     numero = models.CharField(max_length=10)
-    complemento = models.CharField(max_length=255)
+    complemento = models.CharField(max_length=255, blank=True, null=True)
 
 
 class Estabelecimento(models.Model):

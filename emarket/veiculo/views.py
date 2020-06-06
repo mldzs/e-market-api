@@ -13,7 +13,7 @@ class VeiculoViewSet(MixedPermissionModelViewSet):
     http_method_names = ["get", "post", "patch", "delete"]
 
     permission_classes_by_action = {
-        "list": [IsAuthenticated],
+        "list": [IsAuthenticated, EntregadorPermissao],
         "retrieve": [IsAuthenticated, DonoDoVeiculoPermissao],
         "create": [IsAuthenticated, EntregadorPermissao],
         "partial_update": [IsAuthenticated, DonoDoVeiculoPermissao],
@@ -21,9 +21,6 @@ class VeiculoViewSet(MixedPermissionModelViewSet):
     }
 
     def list(self, request, *args, **kwargs):
-        try:
-            self.queryset = Veiculo.objects.filter(entregador=request.user.entregador)
-        except Exception:
-            return Response({"message": "Você não tem permissão de Cliente."}, 400)
+        self.queryset = Veiculo.objects.filter(entregador=request.user.entregador)
 
         return super().list(request, *args, **kwargs)

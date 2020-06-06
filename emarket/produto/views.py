@@ -60,9 +60,6 @@ class ProdutoCarrinhoViewSet(MixedPermissionModelViewSet):
     }
 
     def list(self, request, *args, **kwargs):
-        try:
-            self.queryset = ProdutoCarrinho.objects.filter(carrinho__cliente=request.user.cliente)
-        except Exception:
-            return Response({"message": "Você não tem permissão de Cliente."}, 400)
+        self.queryset = ProdutoCarrinho.objects.filter(carrinho__cliente=request.user.cliente)
 
         return super().list(request, *args, **kwargs)
