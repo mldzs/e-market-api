@@ -1,4 +1,4 @@
-from random import shuffle
+from random import shuffle, choice
 
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -61,7 +61,7 @@ class PedidoViewSet(MixedPermissionModelViewSet):
     @action(methods=["PATCH"], detail=True, permission_classes=[IsAuthenticated, PedidoEstabelecimento])
     def rejeitar_pedido(self, request, pk=None):
         pedido = self.get_object()
-        cliente = pedido.carrinho.cliente
+        cliente = pedido.carrinho.cliente.usuario
         pedido.delete()
 
         mensagem_estabelecimento = request.data.get("mensagem")
@@ -87,7 +87,7 @@ class PedidoViewSet(MixedPermissionModelViewSet):
             return Response({"message": "O pedido não está sendo elaborado!"})
 
         entregadores = list(Entregador.objects.all())
-        entregador = shuffle(entregadores)
+        entregador = choice(entregadores)
 
         if not entregador:
             return Response({"message": "Não encontramos entregadores no momento!"})
@@ -99,13 +99,13 @@ class PedidoViewSet(MixedPermissionModelViewSet):
         mensagem = f"Acaba de chegar uma entrega para você realizar."
 
         enviar_email.delay(
-            to=[entregador.email],
+            to=[entregador.usuario.email],
             subject="Solicitação de entrega",
             context={"mensagem": mensagem},
             template="email/enviar_email.html",
         )
 
-        enviar_notificacao.delay(id_usuarios=[entregador.pk], title="Entrega", body=mensagem)
+        enviar_notificacao.delay(id_usuarios=[entregador.usuario.pk], title="Entrega", body=mensagem)
 
         return Response({"message": "Entrega solicitada"})
 
@@ -134,8 +134,8 @@ class PedidoViewSet(MixedPermissionModelViewSet):
 
         mensagem = f"O pedido está sendo entregue."
 
-        estabelecimento = pedido.carrinho.estabelecimento
-        cliente = pedido.carrinho.cliente
+        estabelecimento = pedido.carrinho.estabelecimento.usuario
+        cliente = pedido.carrinho.cliente.usuario
 
         enviar_email.delay(
             to=[estabelecimento.email, cliente.email],
@@ -155,35 +155,29 @@ class PedidoViewSet(MixedPermissionModelViewSet):
         if pedido.status != "aguardando_entregador":
             return Response({"message": "O pedido não está pendente de entrega!"})
 
-        entregadores = list(Entregador.objects.all())
-        entregador = shuffle(entregadores)
+        entregador_que_rejeitou = request.user.entregador
+        entregadores = list(Entregador.objects.all().exclude(pk=entregador_que_rejeitou.pk))
+        entregador = choice(entregadores) if entregadores else None
+
         if not entregador:
             entregador = None
             mensagem = """O entregador rejeitou a entrega. Tentemos achar outro mas não encontramos no momento.
                             Tente novamente daqui a pouco"""
-            estabelecimento = pedido.carrinho.estabelecimento
-            enviar_email.delay(
-                to=[estabelecimento.email],
-                subject="Entrega rejeitada",
-                context={"mensagem": mensagem},
-                template="email/enviar_email.html",
-            )
-
-            enviar_notificacao.delay(id_usuarios=[estabelecimento.pk], title="Entrega", body=mensagem)
+            pedido.status = "elaborando_pedido"
         else:
             mensagem = "O entregador rejeitou a entrega. Solicitamos para outro entregador."
-            estabelecimento = pedido.carrinho.estabelecimento
-            enviar_email.delay(
-                to=[estabelecimento.email],
-                subject="Entrega rejeitada",
-                context={"mensagem": mensagem},
-                template="email/enviar_email.html",
-            )
+            pedido.status = "aguardando_entregador"
 
-            enviar_notificacao.delay(id_usuarios=[estabelecimento.pk], title="Entrega", body=mensagem)
+        estabelecimento = pedido.carrinho.estabelecimento.usuario
+        enviar_email.delay(
+            to=[estabelecimento.email],
+            subject="Entrega rejeitada",
+            context={"mensagem": mensagem},
+            template="email/enviar_email.html",
+        )
+        enviar_notificacao.delay(id_usuarios=[estabelecimento.pk], title="Entrega", body=mensagem)
 
         pedido.entregador = entregador
-        pedido.status = "aguardando_entregador"
         pedido.save()
 
         return Response({"message": "A entrega foi rejeitada."})
@@ -199,7 +193,7 @@ class PedidoViewSet(MixedPermissionModelViewSet):
         pedido.save()
 
         mensagem = "O cliente confirmou o recebimento da entrega."
-        estabelecimento = pedido.carrinho.estabelecimento
+        estabelecimento = pedido.carrinho.estabelecimento.usuario
         enviar_email.delay(
             to=[estabelecimento.email],
             subject="Entrega confirmada",

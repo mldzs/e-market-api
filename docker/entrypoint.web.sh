@@ -1,6 +1,6 @@
 #!/bin/sh
 
-python ./manage.py collectstatic
+python ./manage.py collectstatic --noinput
 python ./manage.py migrate
 
-gunicorn emarket.wsgi -c gunicorn/gunicorn.conf.py
+gunicorn emarket.wsgi -c config/gunicorn/gunicorn.conf.py
