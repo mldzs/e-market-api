@@ -38,10 +38,11 @@ services:
     depends_on:
       - redis
   nginx:
-    image: nginx:1.19.0-alpine
+    build:
+      context: ../
+      dockerfile: ./docker/nginx/Dockerfile
     ports:
       - "80:80"
-    volumes:
-      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - "443:443"
     depends_on:
       - web
