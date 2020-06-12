@@ -8,29 +8,17 @@ class SuperUserPermissao(BasePermission):
 
 class EstabelecimentoPermissao(BasePermission):
     def has_permission(self, request, view):
-        try:
-            request.user.estabelecimento
-            return True
-        except Exception:
-            return False
+        return hasattr(request.user, "estabelecimento")
 
 
 class ClientePermissao(BasePermission):
     def has_permission(self, request, view):
-        try:
-            request.user.cliente
-            return True
-        except Exception:
-            return False
+        return hasattr(request.user, "cliente")
 
 
 class EntregadorPermissao(BasePermission):
     def has_permission(self, request, view):
-        try:
-            request.user.entregador
-            return True
-        except Exception:
-            return False
+        return hasattr(request.user, "entregador")
 
 
 class ProprioUsuarioPermissao(BasePermission):

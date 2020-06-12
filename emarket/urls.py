@@ -14,7 +14,7 @@ from .categoria.views import CategoriaViewSet
 from .marca.views import MarcaViewSet
 from .pedido.views import PedidoViewSet
 from .produto.views import ProdutoCarrinhoViewSet, ProdutoViewSet, TipoProdutoViewSet
-from .usuario.views import EstabelecimentoViewSet, ClienteViewSet, EntregadorViewSet, EnderecoViewSet
+from .usuario.views import EstabelecimentoViewSet, ClienteViewSet, EntregadorViewSet, EnderecoViewSet, TokenLogin
 from .veiculo.views import VeiculoViewSet
 
 
@@ -50,7 +50,7 @@ urlpatterns = [
     path("docs/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
-    path("token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("token/", TokenLogin.as_view(), name="token_obtain_pair"),
     path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
 ]
 
