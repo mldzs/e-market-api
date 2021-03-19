@@ -15,7 +15,7 @@ distlib==0.3.0
 Django==3.0.7
 django-cors-headers==3.3.0
 django-filter==2.2.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 djangorestframework-simplejwt==4.4.0
 drf-yasg==1.17.1
 fcm-django==0.3.4
